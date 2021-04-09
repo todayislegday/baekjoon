@@ -1,0 +1,47 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args)   {
+		// TODO Auto-generated method stub
+		
+Scanner sc=new Scanner(System.in);
+int N=sc.nextInt();
+
+int[][] dist=new int[N+1][N+1];
+boolean[][] other=new boolean[N+1][N+1];	
+for(int i=1;i<N+1;i++) {//각 도시들끼리 최소시간으로 이어져있다.
+	for(int j=1;j<N+1;j++) {
+		dist[i][j]=sc.nextInt();
+	}	
+}
+for(int k=1;k<N+1;k++) {
+ for(int i=1;i<N+1;i++) {
+	 if(k==i)continue;
+	for(int j=1;j<N+1;j++) {
+		if (i == j) continue;
+        if (k == j) continue;
+		if(dist[i][j]>dist[i][k]+dist[k][j]) {//모든 쌍의 도시에 대해서 최소이동시간을 구했는데 이렇게 되면  말이 틀리게된다.
+			 System.out.println(-1);
+             System.exit(0);
+		}
+		 if (dist[i][j] == dist[i][k] + dist[k][j]) {//i->j로 가는데 i->k->j랑 같다면,원래 이렇게 돌아가서 i->j의 최소시간을 구한것이다.
+             other[i][j] = true;//실제 다이렉트로 이어져있지 않음을 체크해준다.
+         }
+	}	
+ }
+}
+
+int ans=0;
+for(int i=1;i<N+1;i++) {
+	for (int j=1; j<N+1; j++) {
+        if (other[i][j] == false) {//실제 이어져있음을 나타내는 도로
+            ans += dist[i][j];
+        }
+    }
+}
+
+ans /= 2;//길이 양방향이 가능하기때문에.
+System.out.println(ans);
+
+	}	
+	}

@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+
+public class Main{
+	static final long inf=10000L*400L*400L;
+	public static void main(String[] args)   {
+		// TODO Auto-generated method stub
+		
+Scanner sc=new Scanner(System.in);
+int V=sc.nextInt();
+int E=sc.nextInt();
+
+long[][] dist=new long[V+1][V+1];
+
+for(int i=1;i<V+1;i++) {
+	for(int j=1;j<V+1;j++) {
+		dist[i][j]=inf;
+	}	
+}
+while(E-->0) {
+	int s=sc.nextInt();
+	int e=sc.nextInt();
+	int c=sc.nextInt();
+	dist[s][e]=c;
+}
+
+long ans=inf;
+
+for(int k=1;k<V+1;k++) {
+	for(int i=1;i<V+1;i++) {
+		for(int j=1;j<V+1;j++) {
+			if(dist[i][j]>dist[i][k]+dist[k][j]) {
+				dist[i][j]=dist[i][k]+dist[k][j];
+			}
+		}	
+	}
+}
+
+	for(int i=1;i<V+1;i++) {
+		if(ans>dist[i][i]) {
+			ans=dist[i][i];
+		}
+			
+	}
+if(ans==inf) {
+	System.out.print(-1);
+}else {
+	System.out.print(ans);
+}
+
+	}	
+	}
