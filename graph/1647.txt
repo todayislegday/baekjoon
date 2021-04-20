@@ -1,0 +1,65 @@
+import java.util.*;
+class Node implements Comparable<Node>{
+	
+	int t,c;
+	public Node(int to,int cost) {
+		// TODO Auto-generated constructor stub
+      this.t=to;
+      this.c=cost;
+	}
+	@Override
+	public int compareTo(Node o) {
+		// TODO Auto-generated method stub
+		return this.c-o.c;
+	}
+}
+
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int N=sc.nextInt();//집의 개수
+        int M=sc.nextInt();//길의 개수
+        
+       ArrayList<Node>[] l=new ArrayList[N+1];
+       boolean[] check=new boolean[N+1];
+       for(int i=0;i<N+1;i++)l[i]=new ArrayList<Node>();
+       		
+       while(M-->0) {
+    	   int f=sc.nextInt();
+    	   int t=sc.nextInt();
+    	   int c=sc.nextInt();
+    	   l[f].add(new Node(t,c));
+    	   l[t].add(new Node(f,c));
+       }
+       
+       PriorityQueue<Node> q = new PriorityQueue<Node>();
+
+       for (Node e : l[1]) {
+    	   q.add(e);
+    	}
+       
+       check[1]=true;
+       int ans=0;
+       int maxcost=0;//마지막에 빼주기위해서,두 마을로 분할할 길을 정한다.
+       
+       while(!q.isEmpty()) {
+    	 Node prev=q.poll();
+    	 int prevn=prev.t;
+    	 int prevc=prev.c;
+    	 
+    	 if(check[prevn])continue;
+    	 check[prevn]=true;
+    	 ans+=prevc;
+    	 if(prevc>maxcost)maxcost=prevc;
+    	 for(Node to:l[prevn]) {
+    		 q.add(to);
+    	 }
+    	 
+       }
+       
+       System.out.print(ans-maxcost);
+
+   
+    }
+}

@@ -1,0 +1,37 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+   int n=sc.nextInt();//사건
+   int k=sc.nextInt();//관계
+   
+   int[][] a=new int[n+1][n+1];
+   
+   while(k-->0) {
+	   int be=sc.nextInt();
+	   int af=sc.nextInt();
+	   a[be][af]=-1;
+	   a[af][be]=1;
+   }
+
+   for(int i=1;i<=n;i++) {
+	   for(int j=1;j<=n;j++) {
+		   for(int z=1;z<=n;z++) {//멀리 연결되있지만 떨어져있는 사건에대해서,간접 연결 표현
+			  if(a[j][i]==-1&&a[i][z]==-1)a[j][z]=-1;
+			  if(a[j][i]==1&&a[i][z]==1)a[j][z]=1;	 
+		   }   
+	   }   
+   }
+   
+   int s=sc.nextInt();
+    
+   while(s-->0) {
+	   int be=sc.nextInt();
+	   int af=sc.nextInt();
+	System.out.println(a[be][af]);
+   }
+   
+   
+    }
+}
